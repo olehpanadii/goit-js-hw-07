@@ -39,4 +39,17 @@ function handlerClick(evt) {
     `);
 
   instance.show();
+
+  container.addEventListener("keydown", handleKeyDown);
+
+  function closeModal() {
+    instance.close();
+    container.removeEventListener("keydown", handleKeyDown); // Видалення обробника подій
+  }
+
+  function handleKeyDown(event) {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  }
 }
