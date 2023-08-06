@@ -18,7 +18,7 @@ function createMurkup(arr) {
     .join("");
 }
 container.insertAdjacentHTML("beforeend", createMurkup(galleryItems));
-
+// add galery simple light box
 var lightbox = new SimpleLightbox(".gallery a", {
   captionsData: "alt",
   captionDelay: 250,

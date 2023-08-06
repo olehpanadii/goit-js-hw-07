@@ -25,7 +25,6 @@ function createMurkup(arr) {
 container.insertAdjacentHTML("beforeend", createMurkup(galleryItems));
 
 container.addEventListener("click", handlerClick);
-
 function handlerClick(evt) {
   evt.preventDefault();
   if (!evt.target.classList.contains("gallery__image")) {
@@ -34,22 +33,32 @@ function handlerClick(evt) {
   const currentImage = evt.target.closest(".gallery__link");
   const source = currentImage.href;
 
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
         <img src="${source}" width="800" height="600">
-    `);
+    `,
+    {
+      onShow: (instance) => {
+        container.addEventListener("keydown", handleKeyDown);
+      },
+      onClose: (instance) => {
+        container.removeEventListener("keydown", handleKeyDown);
+      },
+    }
+  );
 
   instance.show();
 
-  container.addEventListener("keydown", handleKeyDown);
-
-  function closeModal() {
-    instance.close();
-    container.removeEventListener("keydown", handleKeyDown); // Видалення обробника подій
-  }
-
   function handleKeyDown(event) {
     if (event.key === "Escape") {
-      closeModal();
+      instance.close();
     }
   }
 }
+
+// container.addEventListener("keydown", handleKeyDown);
+
+// function closeModal() {
+//   instance.close();
+//   container.removeEventListener("keydown", handleKeyDown); // Видалення обробника подій
+// }
